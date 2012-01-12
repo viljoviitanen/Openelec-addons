@@ -52,15 +52,9 @@ ADDON_HOME="$HOME/.xbmc/userdata/addon_data/$ADDON_NAME"
     exit 1
   fi
 
-  if [ ! -d "$HOME/.mysql/xbmc_video" ]; then
-    mysql << END
-CREATE USER 'xbmc' IDENTIFIED BY 'xbmc';
-CREATE database xbmc_video;
-CREATE database xbmc_music;
-GRANT ALL ON xbmc_video.* TO 'xbmc';
-GRANT ALL ON xbmc_music.* TO 'xbmc';
-GRANT ALL ON *.* TO ''@'localhost';
+  mysql << END
+GRANT ALL ON *.* TO 'xbmc'@'%' IDENTIFIED BY 'xbmc';
+GRANT ALL ON *.* TO 'xbmc'@'localhost' IDENTIFIED BY 'xbmc';
 END
-  fi
 #XXX TODO set xbmc user password
 
