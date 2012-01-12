@@ -1,0 +1,16 @@
+Hack to get mysql server service addon in OpenELEC.
+
+How to use: first check out openelec git repository
+
+Then copy this repo contents over there, it creates
+
+packages/addons/service/system/mysql-server
+
+then run 
+./scripts/create_addon mysql-server
+
+For now this messes up the build system so after making the addon
+you need to clean up at least the sysroot.
+
+
+(This is intentionally not a forked openelec repo!)
