@@ -21,7 +21,7 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-ADDON_NAME="service.system.mysql-server"
+ADDON_NAME="service.system.mysql"
 ADDON_DIR="$HOME/.xbmc/addons/$ADDON_NAME"
 ADDON_HOME="$HOME/.xbmc/userdata/addon_data/$ADDON_NAME"
 

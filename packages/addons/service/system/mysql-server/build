@@ -27,8 +27,8 @@
   strip_lto
 
 cd $PKG_BUILD
-ADDON_DIR="/storage/.xbmc/addons/service.system.mysql-server/"
-ADDON_HOME="/storage/.xbmc/userdata/addon_data/service.system.mysql-server"
+ADDON_DIR="/storage/.xbmc/addons/service.system.mysql"
+ADDON_HOME="/storage/.xbmc/userdata/addon_data/service.system.mysql"
 
 ac_cv_c_stack_direction=-1 \
 ac_cv_sys_restartable_syscalls=yes \

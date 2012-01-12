@@ -23,7 +23,7 @@
 
 . config/options $1
  
-ADDON_DIR="/storage/.xbmc/addons/service.system.mysql-server/"
+ADDON_DIR="/storage/.xbmc/addons/service.system.mysql"
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -Pra $PKG_CONFIG_SYSROOT_DIR/$ADDON_DIR/* $ADDON_BUILD/$PKG_ADDON_ID/
