@@ -32,16 +32,20 @@ ADDON_HOME="$HOME/.xbmc/userdata/addon_data/$ADDON_NAME"
 
 #check if mysql has been initialized
   if [ ! -d "$HOME/.mysql/mysql" ]; then
+#make sure libexec dir binaries has execute.. sigh
+    chmod a+rx $ADDON_DIR/libexec/*
     mysql_install_db
   fi
 
   if [ -z "$(pidof mysqld)" ]; then
-    mysqld_safe --user=root &
+#double check... I'm quite sure there are race conditions here
+    chmod a+rx $ADDON_DIR/libexec/*
+    mysqld_safe --user=root --myisam-recover=BACKUP,FORCE &
     sleep 2
   fi
 #try again...
   if [ -z "$(pidof mysqld)" ]; then
-    sleep 2
+    sleep 4
   fi
 #if still not up, exit.
   if [ -z "$(pidof mysqld)" ]; then
@@ -55,6 +59,7 @@ CREATE database xbmc_video;
 CREATE database xbmc_music;
 GRANT ALL ON xbmc_video.* TO 'xbmc';
 GRANT ALL ON xbmc_music.* TO 'xbmc';
+GRANT ALL ON *.* TO ''@'localhost';
 END
   fi
 #XXX TODO set xbmc user password

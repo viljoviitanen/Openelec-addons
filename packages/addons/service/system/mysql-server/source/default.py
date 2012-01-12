@@ -27,7 +27,7 @@ import xbmcaddon
 __scriptname__ = "Mysql server for XBMC"
 __author__     = "OpenELEC"
 __url__        = "http://www.openelec.tv"
-__settings__   = xbmcaddon.Addon(id='service.system.mysql-server')
+__settings__   = xbmcaddon.Addon(id='service.system.mysql')
 __cwd__        = __settings__.getAddonInfo('path')
 __path__       = xbmc.translatePath( os.path.join( __cwd__, 'bin', "mysql.service") )
 
