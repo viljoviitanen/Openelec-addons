@@ -1,6 +1,6 @@
 # Openelec addons by Viljo Viitanen
 
-## How to use:
+How to use:
 
 * first check out openelec git repository
 * then copy this repo contents over there
@@ -23,6 +23,8 @@ A Nintendo emulator. http://fceux.org
 Adds also scons build system
 
 Not really complete yet, just provides a binary and no means to launch roms. For now use e.g. advanced launcher addon to launch.
+
+TODO: fix ccache directory, now it does not use openelec build specific cache directory, but default $HOME/.ccache
 
 ### Scons
 
