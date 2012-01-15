@@ -1,0 +1,18 @@
+--- a/SConstruct	2011-06-04 08:26:55.000000000 +0300
++++ b/SConstruct	2012-01-14 17:23:42.832968390 +0200
+@@ -12,11 +12,12 @@
+   BoolVariable('NEWPPU',    'Enable new PPU core', 1),
+   BoolVariable('CREATE_AVI', 'Enable avi creation support (SDL only)', 1),
+   BoolVariable('LOGO', 'Enable a logoscreen when creating avis (SDL only)', '1'),
+-  BoolVariable('GTK', 'Enable GTK2 GUI (SDL only)', 1),
++  BoolVariable('GTK', 'Enable GTK2 GUI (SDL only)', 0),
+   BoolVariable('GTK3', 'Enable GTK3 GUI (BROKEN/EXPERIMENTAL)', 0),
+ )
+ 
+-env = Environment(options = opts)
++env = Environment(ENV = {'PATH' : os.environ['PATH']},options = opts)
++env.Append(LINKFLAGS = ['-ldl'])
+ 
+ env.Append(CPPDEFINES=["PUBLIC_RELEASE"])
+ 
+

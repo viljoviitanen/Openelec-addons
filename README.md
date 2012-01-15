@@ -25,6 +25,8 @@ Adds also scons build system
 Not really complete yet, just provides a binary and no means to launch roms. For now use e.g. advanced launcher addon to launch.
 
 TODO: fix ccache directory, now it does not use openelec build specific cache directory, but default $HOME/.ccache
+To compie and create addon
+    ./scripts/create_addon fceu
 
 ### Scons
 

@@ -1,0 +1,2 @@
+2.0.0
+- initial version, fceux 2.1.5 . Provides only the fceux binary, no means to launch roms
