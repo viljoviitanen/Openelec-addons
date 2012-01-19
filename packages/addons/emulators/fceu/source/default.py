@@ -23,7 +23,15 @@
 import os
 import sys
 import xbmcgui
+import xbmcaddon
 
 dialog = xbmcgui.Dialog()
-dialog.ok('FCEUX', 'This addon cannot launch roms.','Use some other addon e.g.','Advanced Launcher')
+fn = dialog.browse(1, 'FCEU', 'files')
+
+__settings__   = xbmcaddon.Addon(id='emulator.fceu')
+__cwd__        = __settings__.getAddonInfo('path')
+__path__       = xbmc.translatePath( os.path.join( __cwd__, 'bin', "fceux") )
+
+os.system( "chmod a+rx " + __path__ )
+os.system( "%s --fullscreen 1 --opengl 1 '%s' "%(__path__,fn) )
 
