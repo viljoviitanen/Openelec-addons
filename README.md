@@ -10,7 +10,7 @@ How to use:
 ### Mysql server ###
 
 Hack to get mysql server service addon in OpenELEC.
-To compile and create addon
+To compile and create addon  
     ./scripts/create_addon mysql-server
 
 For now this messes up the build system so after making the addon
@@ -23,11 +23,11 @@ A Nintendo emulator. http://fceux.org
 2.0.1 download adds a file dialog to choose the launched rom  
 To quit the emulator, press the delete key
 
-TODO:
-fix ccache directory, now it does not use openelec build specific cache directory, but default $HOME/.ccache  
-add command line parameters to settings instead of hardcoded values  
+TODO:  
+- fix ccache directory, now it does not use openelec build specific cache directory, but default $HOME/.ccache  
+- add command line parameters to settings instead of hardcoded values  
 
-To compie and create addon
+To compile and create addon  
     ./scripts/create_addon fceu
 
 Adds also scons build system, below
