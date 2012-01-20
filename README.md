@@ -20,17 +20,17 @@ you need to clean up at least the mysql build dir.
 
 A Nintendo emulator. http://fceux.org
 
-Adds also scons build system
-
-2.0.1 download adds a file dialog to choose the launched rom
+2.0.1 download adds a file dialog to choose the launched rom  
+To quit the emulator, press the delete key
 
 TODO:
 fix ccache directory, now it does not use openelec build specific cache directory, but default $HOME/.ccache  
 add command line parameters to settings instead of hardcoded values  
-figure out a way to quit the emulator other than ssh'ing in openelec box and killing the process  
 
 To compie and create addon
     ./scripts/create_addon fceu
+
+Adds also scons build system, below
 
 ### Scons
 
