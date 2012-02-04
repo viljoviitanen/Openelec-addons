@@ -20,12 +20,11 @@ you need to clean up at least the mysql build dir.
 
 A Nintendo emulator. http://fceux.org
 
-2.0.1 download adds a file dialog to choose the launched rom  
+2.0.2 download adds a setting for command line parameters
 To quit the emulator, press the delete key
 
 TODO:  
 - fix ccache directory, now it does not use openelec build specific cache directory, but default $HOME/.ccache  
-- add command line parameters to settings instead of hardcoded values  
 
 To compile and create addon  
     ./scripts/create_addon fceu
