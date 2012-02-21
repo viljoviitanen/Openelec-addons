@@ -4,6 +4,7 @@ How to use:
 
 * first check out openelec git repository
 * then copy this repo contents over there
+* or just use make-repo.sh to build all addons
 
 ## Contents
 
@@ -34,6 +35,11 @@ Adds also scons build system, below
 ### Scons
 
 http://scons.org - used in fceux build.
+
+### Repository
+
+use make-repo.sh to build all addons and build a repository structure that ready to be deployed, with addons.xml and addons.xml.md5 files in root.
+Note: for actual deployment you also need to generate the repository addon zip file, template is in repository.mytestrepository directory.
 
 ### Notes
 
