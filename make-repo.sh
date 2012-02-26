@@ -74,7 +74,7 @@ doit() {
     echo "Project: $PROJECT Arch: $ARCH create_addon $addon"
     export PROJECT
     export ARCH
-    scripts/create_addon $addon
+    scripts/create_addon $addon || die "create_addon failed"
   done
   #XXX here's a tricky part. If we have many versions in the target addon dir, get the newest version. Hope it's what we want!
   #XXX maybe add version to parameters in addition of project and arch?
