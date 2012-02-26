@@ -1,0 +1,11 @@
+--- a/src/file.cpp	2010-09-19 03:05:09.000000000 +0300
++++ b/src/file.cpp	2012-02-26 08:49:41.469897782 +0200
+@@ -310,7 +310,7 @@
+ 				if(magic==0x088b1f) {
+ 					 // maybe gzip... 
+ 
+-					void* gzfile = gzopen(fileToOpen.c_str(),"rb");
++					gzFile gzfile = gzopen(fileToOpen.c_str(),"rb");
+ 					if(gzfile) {
+ 						delete fp;
+ 
