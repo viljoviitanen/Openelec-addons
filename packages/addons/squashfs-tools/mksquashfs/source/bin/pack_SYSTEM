@@ -1,0 +1,8 @@
+#!/bin/sh
+NEW_DIR=/storage/system.new
+
+echo "Squashing new SYSTEM, copying to update directory"
+mksquashfs $NEW_DIR /storage/.update/SYSTEM
+cp /flash/KERNEL /storage/.update
+
+echo "All done. Reboot to upgrade"

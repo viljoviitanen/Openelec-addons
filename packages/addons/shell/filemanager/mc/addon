@@ -1,0 +1,53 @@
+#!/bin/sh
+
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+################################################################################
+
+. config/options $1
+
+mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $PKG_BUILD/src/mc $ADDON_BUILD/$PKG_ADDON_ID/bin/mc
+
+mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/etc/mc
+  cp $PKG_BUILD/misc/edit.* $ADDON_BUILD/$PKG_ADDON_ID/etc/mc
+  cp $PKG_BUILD/misc/mc.keymap* $ADDON_BUILD/$PKG_ADDON_ID/etc/mc
+  cp $PKG_BUILD/misc/mc*menu* $ADDON_BUILD/$PKG_ADDON_ID/etc/mc
+  cp $PKG_BUILD/misc/mc.ext $ADDON_BUILD/$PKG_ADDON_ID/etc/mc
+  cp $PKG_BUILD/misc/filehighlight.ini $ADDON_BUILD/$PKG_ADDON_ID/etc/mc
+  cp $PKG_BUILD/src/vfs/extfs/helpers/sfs.ini $ADDON_BUILD/$PKG_ADDON_ID/etc/mc
+
+mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/libexec/mc/extfs.d
+  cp $PKG_BUILD/src/consaver/cons.saver $ADDON_BUILD/$PKG_ADDON_ID/libexec/mc/
+  cp $PKG_BUILD/src/vfs/extfs/helpers/u7z $ADDON_BUILD/$PKG_ADDON_ID/libexec/mc/extfs.d
+  cp $PKG_BUILD/src/vfs/extfs/helpers/urar $ADDON_BUILD/$PKG_ADDON_ID/libexec/mc/extfs.d
+  cp $PKG_BUILD/src/vfs/extfs/helpers/uzip $ADDON_BUILD/$PKG_ADDON_ID/libexec/mc/extfs.d
+
+mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/share/mc/hints
+  cp $PKG_BUILD/doc/hints/mc.hint $ADDON_BUILD/$PKG_ADDON_ID/share/mc/hints
+
+mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/share/mc/skins
+  cp $PKG_BUILD/misc/skins/*.ini $ADDON_BUILD/$PKG_ADDON_ID/share/mc/skins
+
+mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/share/mc/syntax
+  cp $PKG_BUILD/misc/syntax/*.syntax $ADDON_BUILD/$PKG_ADDON_ID/share/mc/syntax
+  cp $PKG_BUILD/misc/syntax/Syntax $ADDON_BUILD/$PKG_ADDON_ID/share/mc/syntax
+
+  cp $PKG_BUILD/misc/mc.charsets $ADDON_BUILD/$PKG_ADDON_ID/share/mc
+  cp $PKG_BUILD/misc/mc.lib $ADDON_BUILD/$PKG_ADDON_ID/share/mc

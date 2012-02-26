@@ -1,0 +1,100 @@
+diff -Naur bluez-tools-0.1.38-662e/src/bt-adapter.c bluez-tools-0.1.38-662e.patch/src/bt-adapter.c
+--- bluez-tools-0.1.38-662e/src/bt-adapter.c	2010-11-01 09:46:29.000000000 -0400
++++ bluez-tools-0.1.38-662e.patch/src/bt-adapter.c	2012-01-19 13:48:55.000000000 -0500
+@@ -50,7 +50,7 @@
+ 	g_print("  Name: %s\n", g_hash_table_lookup(values, "Name") != NULL ? g_value_get_string(g_hash_table_lookup(values, "Name")) : NULL);
+ 	g_print("  Alias: %s\n", g_hash_table_lookup(values, "Alias") != NULL ? g_value_get_string(g_hash_table_lookup(values, "Alias")) : NULL);
+ 	g_print("  Address: %s\n", g_value_get_string(g_hash_table_lookup(values, "Address")));
+-	g_print("  Icon: %s\n", g_value_get_string(g_hash_table_lookup(values, "Icon")));
++	g_print("  Icon: %s\n", g_hash_table_lookup(values, "Icon") != NULL ? g_value_get_string(g_hash_table_lookup(values, "Icon")) : NULL);
+ 	g_print("  Class: 0x%x\n", g_value_get_uint(g_hash_table_lookup(values, "Class")));
+ 	g_print("  LegacyPairing: %d\n", g_value_get_boolean(g_hash_table_lookup(values, "LegacyPairing")));
+ 	g_print("  Paired: %d\n", g_value_get_boolean(g_hash_table_lookup(values, "Paired")));
+diff -Naur bluez-tools-0.1.38-662e/src/bt-device.c bluez-tools-0.1.38-662e.patch/src/bt-device.c
+--- bluez-tools-0.1.38-662e/src/bt-device.c	2010-11-21 10:21:53.000000000 -0500
++++ bluez-tools-0.1.38-662e.patch/src/bt-device.c	2012-01-19 14:03:47.000000000 -0500
+@@ -53,7 +53,9 @@
+ /* Main arguments */
+ static gchar *adapter_arg = NULL;
+ static gboolean list_arg = FALSE;
++static gchar *create_arg = NULL;
+ static gchar *connect_arg = NULL;
++static gchar *pin_arg = NULL;
+ static gchar *disconnect_arg = NULL;
+ static gchar *remove_arg = NULL;
+ static gchar *info_arg = NULL;
+@@ -240,7 +242,9 @@
+ static GOptionEntry entries[] = {
+ 	{"adapter", 'a', 0, G_OPTION_ARG_STRING, &adapter_arg, "Adapter Name or MAC", "<name|mac>"},
+ 	{"list", 'l', 0, G_OPTION_ARG_NONE, &list_arg, "List added devices", NULL},
++	{"create", 'e', 0, G_OPTION_ARG_STRING, &create_arg, "Create device", "<mac>"},
+ 	{"connect", 'c', 0, G_OPTION_ARG_STRING, &connect_arg, "Connect to the remote device", "<mac>"},
++	{"pin", 'p', 0, G_OPTION_ARG_STRING, &pin_arg, "Set PIN value (use only with connect)", "<pin>"},
+ 	{"disconnect", 'd', 0, G_OPTION_ARG_STRING, &disconnect_arg, "Disconnect the remote device", "<name|mac>"},
+ 	{"remove", 'r', 0, G_OPTION_ARG_STRING, &remove_arg, "Remove device", "<name|mac>"},
+ 	{"info", 'i', 0, G_OPTION_ARG_STRING, &info_arg, "Get info about device", "<name|mac>"},
+@@ -284,7 +288,7 @@
+ 		g_print("%s: %s\n", g_get_prgname(), error->message);
+ 		g_print("Try `%s --help` for more information.\n", g_get_prgname());
+ 		exit(EXIT_FAILURE);
+-	} else if (!list_arg && (!connect_arg || strlen(connect_arg) == 0) && (!disconnect_arg || strlen(disconnect_arg) == 0) && (!remove_arg || strlen(remove_arg) == 0) && (!info_arg || strlen(info_arg) == 0) && !services_arg && !set_arg) {
++	} else if (!list_arg && (!create_arg || strlen(create_arg) == 0)&& (!connect_arg || strlen(connect_arg) == 0) && (!pin_arg || strlen(pin_arg) == 0)&& (!disconnect_arg || strlen(disconnect_arg) == 0) && (!remove_arg || strlen(remove_arg) == 0) && (!info_arg || strlen(info_arg) == 0) && !services_arg && !set_arg) {
+ 		g_print("%s", g_option_context_get_help(context, FALSE, NULL));
+ 		exit(EXIT_FAILURE);
+ 	} else if (services_arg && (argc != 2 || strlen(argv[1]) == 0) && (argc != 3 || strlen(argv[1]) == 0)) {
+@@ -330,7 +334,28 @@
+ 			g_print("%s (%s)\n", device_get_alias(device), device_get_address(device));
+ 			g_object_unref(device);
+ 		}
++	} else if (create_arg) {
++		g_print("Create device: %s\n", create_arg);
++		Agent *agent = g_object_new(AGENT_TYPE, NULL);
++
++		gchar *created_device = adapter_create_device(adapter, create_arg, &error);
++		exit_if_error(error);
++
++		g_print("Done\n");
++		g_free(created_device);
++		g_object_unref(agent);
+ 	} else if (connect_arg) {
++			if (pin_arg) {
++			//g_print("pin_arg...\n");
++			FILE* pinFile;
++			pinFile = fopen("/tmp/pin", "w");
++				if (NULL != pinFile) {
++				fprintf(pinFile, "%s", pin_arg);
++				fclose(pinFile);
++				} else {
++				g_print("Error opening pinfile\n");
++				}
++			}
+ 		g_print("Connecting to: %s\n", connect_arg);
+ 		Agent *agent = g_object_new(AGENT_TYPE, NULL);
+ 		GMainLoop *mainloop = g_main_loop_new(NULL, FALSE);
+diff -Naur bluez-tools-0.1.38-662e/src/lib/bluez/agent.c bluez-tools-0.1.38-662e.patch/src/lib/bluez/agent.c
+--- bluez-tools-0.1.38-662e/src/lib/bluez/agent.c	2010-08-09 21:19:01.000000000 -0400
++++ bluez-tools-0.1.38-662e.patch/src/lib/bluez/agent.c	2012-01-19 14:08:08.000000000 -0500
+@@ -113,10 +113,21 @@
+ 	g_object_unref(device_obj);
+ 
+ 	*ret = g_new0(gchar, 17);
+-	g_print("Enter PIN code: ");
+ 	errno = 0;
+-	if (scanf("%16s", *ret) == EOF && errno) {
++	FILE* pinFile;
++	pinFile = fopen("/tmp/pin", "r");
++	if (NULL != pinFile) {
++	g_print("Waiting for PIN code from your device...\n"); 
++		if (fscanf(pinFile, "%16s", *ret) == EOF && errno) {
++		g_warning("%s\n", strerror(errno));
++		}
++	fclose(pinFile);
++	unlink ("/tmp/pin");
++	} else {
++	g_print("Enter PIN code: ");
++		if (scanf("%16s", *ret) == EOF && errno) {
+ 		g_warning("%s\n", strerror(errno));
++		}
+ 	}
+ 	return TRUE;
+ }

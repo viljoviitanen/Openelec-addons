@@ -1,0 +1,33 @@
+#!/bin/sh
+ORIG_DIR=/storage/system.orig
+NEW_DIR=/storage/system.new
+
+echo "Verifying free space"
+free_space=`df /storage|grep dev|awk {'print $4'}`
+if [ $free_space -lt 400000 ]
+then
+echo "Not enough space left in /storage"
+exit
+fi
+
+echo "Making directories"
+mkdir $ORIG_DIR
+mkdir $NEW_DIR
+
+echo "Mounting SYSTEM"
+mount -t squashfs -o loop /flash/SYSTEM $ORIG_DIR
+sleep 10
+if mount | grep "on ${ORIG_DIR} type" > /dev/null
+then
+echo "SYSTEM mounted"
+else
+echo "Error mounting SYSTEM"
+exit
+fi
+
+echo "Copy files, please wait"
+cp -a $ORIG_DIR/* $NEW_DIR 
+echo "Umounting SYSTEM"
+umount $ORIG_DIR
+rm -r $ORIG_DIR
+echo "You can edit files in /storage/system.new" 
