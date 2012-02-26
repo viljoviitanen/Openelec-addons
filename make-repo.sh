@@ -21,11 +21,10 @@
 
 
 #list of addons that are going to be built. Names cannot contain spaces or other special characters!
-ADDONS="fceu mysql-server"
+ADDONS="fceu mysql-server mc mksquashfs bluez-tools"
 
 #list of projects and archs that addons are built for in project arch pairs
-TARGETS="Generic i386"
-#TARGETS="Generic i386 Intel x86_64"
+TARGETS="Generic i386 Intel x86_64"
 
 CONF="$HOME/.openelec-addons"
 
