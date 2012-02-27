@@ -1,4 +1,4 @@
-# Openelec addons by Viljo Viitanen
+# Openelec unofficial addon repository
 
 How to use:
 
@@ -6,7 +6,7 @@ How to use:
 * then copy this repo contents over there
 * or just use make-repo.sh to build all addons
 
-## Contents
+## Addons maintained by Viljo Viitanen
 
 ### Mysql server ###
 
@@ -38,11 +38,15 @@ Adds also scons build system, below
 
 http://scons.org - used in fceux build.
 
-### Repository
+## Other addons
+
+each directory has a README file that lists the maintainer of that addon.
+
+## Repository
 
 use make-repo.sh to build all addons and build a repository structure that ready to be deployed, with addons.xml and addons.xml.md5 files in root.
 Note: for actual deployment you also need to generate the repository addon zip file, template is in repository.mytestrepository directory.
 
-### Notes
+## Notes
 
 This is intentionally not a forked openelec repo!
