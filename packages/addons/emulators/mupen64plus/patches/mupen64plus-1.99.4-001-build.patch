@@ -1,0 +1,698 @@
+diff -rupN mupen64plus-1.99.4_orig/source/mupen64plus-audio-sdl/projects/unix/Makefile mupen64plus-1.99.4/source/mupen64plus-audio-sdl/projects/unix/Makefile
+--- mupen64plus-1.99.4_orig/source/mupen64plus-audio-sdl/projects/unix/Makefile	2012-02-27 18:45:54.000000000 +0100
++++ mupen64plus-1.99.4/source/mupen64plus-audio-sdl/projects/unix/Makefile	2012-02-27 18:56:26.000000000 +0100
+@@ -22,58 +22,70 @@
+ # Makefile for SDL Audio plugin in Mupen64plus
+ 
+ # detect operation system
+-UNAME = $(shell uname -s)
+-OS := NONE
+-ifeq ("$(UNAME)","Linux")
+-  OS = LINUX
+-  SHARED = -shared
+-  SO_EXTENSION = so
+-endif
+-ifeq ("$(UNAME)","linux")
+-  OS = LINUX
+-  SHARED = -shared
+-  SO_EXTENSION = so
+-endif
+-ifneq ("$(filter GNU hurd,$(UNAME))","")
+-  OS = LINUX
+-  SHARED = -shared
+-  SO_EXTENSION = so
+-endif
+-ifeq ("$(UNAME)","Darwin")
+-  OS = OSX
+-  SHARED = -bundle
+-  SO_EXTENSION = dylib
+-endif
+-ifeq ("$(UNAME)","FreeBSD")
+-  OS = FREEBSD
+-  SHARED = -shared
+-  SO_EXTENSION = so
+-endif
+-ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
+-  OS = LINUX
+-  SHARED = -shared
+-  SO_EXTENSION = so
+-endif
+-ifeq ("$(OS)","NONE")
+-  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
+-endif
++#UNAME = $(shell uname -s)
++OS := LINUX
++SHARED = -shared
++SO_EXTENSION = so
++
++#ifeq ("$(UNAME)","Linux")
++#  OS = LINUX
++#  SHARED = -shared
++#  SO_EXTENSION = so
++#endif
++#ifeq ("$(UNAME)","linux")
++#  OS = LINUX
++#  SHARED = -shared
++#  SO_EXTENSION = so
++#endif
++#ifneq ("$(filter GNU hurd,$(UNAME))","")
++#  OS = LINUX
++#  SHARED = -shared
++#  SO_EXTENSION = so
++#endif
++#ifeq ("$(UNAME)","Darwin")
++#  OS = OSX
++#  SHARED = -bundle
++#  SO_EXTENSION = dylib
++#endif
++#ifeq ("$(UNAME)","FreeBSD")
++#  OS = FREEBSD
++#  SHARED = -shared
++#  SO_EXTENSION = so
++#endif
++#ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
++#  OS = LINUX
++#  SHARED = -shared
++#  SO_EXTENSION = so
++#endif
++#ifeq ("$(OS)","NONE")
++#  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
++#endif
+ 
+ # detect system architecture
+-HOST_CPU ?= $(shell uname -m)
+-NO_ASM ?= 1
+ CPU := NONE
+-ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
+-  CPU := X86
+-  ifeq ("$(BITS)", "32")
+-    ARCH_DETECTED := 64BITS_32
+-  else
+-    ARCH_DETECTED := 64BITS
+-  endif
++ifeq ("$(ARCH)","i386")
++	CPU := X86
++	ARCH_DETECTED := 32BITS
+ endif
+-ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
+-  CPU := X86
+-  ARCH_DETECTED := 32BITS
++
++ifeq ("$(ARCH)","x86_64")
++        CPU := X86
++        ARCH_DETECTED := 64BITS
+ endif
++NO_ASM ?= 1
++
++#ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
++#  CPU := X86
++#  ifeq ("$(BITS)", "32")
++#    ARCH_DETECTED := 64BITS_32
++#  else
++#    ARCH_DETECTED := 64BITS
++#  endif
++#endif
++#ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
++#  CPU := X86
++#  ARCH_DETECTED := 32BITS
++#endif
+ # PPC doesn't work yet
+ #ifneq ("$(filter ppc powerpc,$(HOST_CPU))","")
+ #  CPU := PPC
+diff -rupN mupen64plus-1.99.4_orig/source/mupen64plus-core/projects/unix/Makefile mupen64plus-1.99.4/source/mupen64plus-core/projects/unix/Makefile
+--- mupen64plus-1.99.4_orig/source/mupen64plus-core/projects/unix/Makefile	2012-02-27 18:45:54.000000000 +0100
++++ mupen64plus-1.99.4/source/mupen64plus-core/projects/unix/Makefile	2012-02-27 18:56:43.000000000 +0100
+@@ -22,45 +22,61 @@
+ # Makefile for Mupen64Plus Core
+ 
+ # detect operating system
+-UNAME = $(shell uname -s)
+-OS := NONE
+-ifeq ("$(UNAME)","Linux")
+-  OS = LINUX
+-endif
+-ifeq ("$(UNAME)","linux")
+-  OS = LINUX
+-endif
+-ifneq ("$(filter GNU hurd,$(UNAME))","")
+-  OS = LINUX
+-endif
+-ifeq ("$(UNAME)","Darwin")
+-  OS = OSX
+-endif
+-ifeq ("$(UNAME)","FreeBSD")
+-  OS = FREEBSD
+-endif
+-ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
+-  OS = LINUX
+-endif
+-ifeq ("$(OS)","NONE")
+-  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
+-endif
++OS := LINUX
++SHARED = -shared
++SO_EXTENSION = so
++
++#UNAME = $(shell uname -s)
++#OS := NONE
++#ifeq ("$(UNAME)","Linux")
++#  OS = LINUX
++#endif
++#ifeq ("$(UNAME)","linux")
++#  OS = LINUX
++#endif
++#ifneq ("$(filter GNU hurd,$(UNAME))","")
++#  OS = LINUX
++#endif
++#ifeq ("$(UNAME)","Darwin")
++#  OS = OSX
++#endif
++#ifeq ("$(UNAME)","FreeBSD")
++#  OS = FREEBSD
++#endif
++#ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
++# OS = LINUX
++#endif
++#ifeq ("$(OS)","NONE")
++#  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
++#endif
+ 
+ # detect system architecture
+-HOST_CPU ?= $(shell uname -m)
+ CPU := NONE
+-ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
+-  CPU := X86
+-  ifeq ("$(BITS)", "32")
+-    ARCH_DETECTED := 64BITS_32
+-  else
+-    ARCH_DETECTED := 64BITS
+-  endif
+-endif
+-ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
+-  CPU := X86
+-  ARCH_DETECTED := 32BITS
+-endif
++ifeq ("$(ARCH)","i386")
++        CPU := X86
++        ARCH_DETECTED := 32BITS
++endif
++
++ifeq ("$(ARCH)","x86_64")
++        CPU := X86
++        ARCH_DETECTED := 64BITS
++endif
++NO_ASM ?= 1
++
++#HOST_CPU ?= $(shell uname -m)
++#CPU := NONE
++#ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
++#  CPU := X86
++#  ifeq ("$(BITS)", "32")
++#    ARCH_DETECTED := 64BITS_32
++#  else
++#    ARCH_DETECTED := 64BITS
++#  endif
++#endif
++#ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
++#  CPU := X86
++#  ARCH_DETECTED := 32BITS
++#endif
+ # PPC doesn't work yet
+ #ifneq ("$(filter ppc powerpc,$(HOST_CPU))","")
+ #  CPU := PPC
+diff -rupN mupen64plus-1.99.4_orig/source/mupen64plus-input-sdl/projects/unix/Makefile mupen64plus-1.99.4/source/mupen64plus-input-sdl/projects/unix/Makefile
+--- mupen64plus-1.99.4_orig/source/mupen64plus-input-sdl/projects/unix/Makefile	2012-02-27 18:45:54.000000000 +0100
++++ mupen64plus-1.99.4/source/mupen64plus-input-sdl/projects/unix/Makefile	2012-02-27 18:59:42.000000000 +0100
+@@ -21,58 +21,74 @@
+ # Makefile for SDL Input plugin in Mupen64plus
+ 
+ # detect operating system
+-UNAME = $(shell uname -s)
+-OS := NONE
+-ifeq ("$(UNAME)","Linux")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(UNAME)","linux")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifneq ("$(filter GNU hurd,$(UNAME))","")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(UNAME)","Darwin")
+-  OS = OSX
+-  SO_EXTENSION = dylib
+-  SHARED = -bundle
+-endif
+-ifeq ("$(UNAME)","FreeBSD")
+-  OS = FREEBSD
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(OS)","NONE")
+-  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
+-endif
++OS := LINUX
++SHARED = -shared
++SO_EXTENSION = so
++
++#UNAME = $(shell uname -s)
++#OS := NONE
++#ifeq ("$(UNAME)","Linux")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(UNAME)","linux")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifneq ("$(filter GNU hurd,$(UNAME))","")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(UNAME)","Darwin")
++#  OS = OSX
++#  SO_EXTENSION = dylib
++#  SHARED = -bundle
++#endif
++#ifeq ("$(UNAME)","FreeBSD")
++#  OS = FREEBSD
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(OS)","NONE")
++#  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
++#endif
+ 
+ # detect system architecture
+-HOST_CPU ?= $(shell uname -m)
+-NO_ASM ?= 1
+ CPU := NONE
+-ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
+-  CPU := X86
+-  ifeq ("$(BITS)", "32")
+-    ARCH_DETECTED := 64BITS_32
+-  else
+-    ARCH_DETECTED := 64BITS
+-  endif
++ifeq ("$(ARCH)","i386")
++        CPU := X86
++        ARCH_DETECTED := 32BITS
+ endif
+-ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
+-  CPU := X86
+-  ARCH_DETECTED := 32BITS
++
++ifeq ("$(ARCH)","x86_64")
++        CPU := X86
++        ARCH_DETECTED := 64BITS
+ endif
++NO_ASM ?= 1
++
++#HOST_CPU ?= $(shell uname -m)
++#NO_ASM ?= 1
++#CPU := NONE
++#ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
++#  CPU := X86
++#  ifeq ("$(BITS)", "32")
++#    ARCH_DETECTED := 64BITS_32
++#  else
++#    ARCH_DETECTED := 64BITS
++#  endif
++#endif
++#ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
++#  CPU := X86
++#  ARCH_DETECTED := 32BITS
++#endif
+ # PPC doesn't work yet
+ #ifneq ("$(filter ppc powerpc,$(HOST_CPU))","")
+ #  CPU := PPC
+diff -rupN mupen64plus-1.99.4_orig/source/mupen64plus-rsp-hle/projects/unix/Makefile mupen64plus-1.99.4/source/mupen64plus-rsp-hle/projects/unix/Makefile
+--- mupen64plus-1.99.4_orig/source/mupen64plus-rsp-hle/projects/unix/Makefile	2012-02-27 18:45:54.000000000 +0100
++++ mupen64plus-1.99.4/source/mupen64plus-rsp-hle/projects/unix/Makefile	2012-02-27 19:00:19.000000000 +0100
+@@ -22,58 +22,74 @@
+ # Makefile for Mupen64 HLE RSP plugin in Mupen64plus.
+ 
+ # detect operating system
+-UNAME = $(shell uname -s)
+-OS := NONE
+-ifeq ("$(UNAME)","Linux")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(UNAME)","linux")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifneq ("$(filter GNU hurd,$(UNAME))","")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(UNAME)","Darwin")
+-  OS = OSX
+-  SO_EXTENSION = dylib
+-  SHARED = -bundle
+-endif
+-ifeq ("$(UNAME)","FreeBSD")
+-  OS = FREEBSD
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(OS)","NONE")
+-  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
+-endif
++OS := LINUX
++SHARED = -shared
++SO_EXTENSION = so
++
++#UNAME = $(shell uname -s)
++#OS := NONE
++#ifeq ("$(UNAME)","Linux")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(UNAME)","linux")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifneq ("$(filter GNU hurd,$(UNAME))","")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(UNAME)","Darwin")
++#  OS = OSX
++#  SO_EXTENSION = dylib
++#  SHARED = -bundle
++#endif
++#ifeq ("$(UNAME)","FreeBSD")
++#  OS = FREEBSD
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
++#  OS = LINUX
++# SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(OS)","NONE")
++#  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
++#endif
+ 
+ # detect system architecture
+-HOST_CPU ?= $(shell uname -m)
+-NO_ASM ?= 1
+ CPU := NONE
+-ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
+-  CPU := X86
+-  ifeq ("$(BITS)", "32")
+-    ARCH_DETECTED := 64BITS_32
+-  else
+-    ARCH_DETECTED := 64BITS
+-  endif
++ifeq ("$(ARCH)","i386")
++        CPU := X86
++        ARCH_DETECTED := 32BITS
+ endif
+-ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
+-  CPU := X86
+-  ARCH_DETECTED := 32BITS
++
++ifeq ("$(ARCH)","x86_64")
++        CPU := X86
++        ARCH_DETECTED := 64BITS
+ endif
++NO_ASM ?= 1
++
++#HOST_CPU ?= $(shell uname -m)
++#NO_ASM ?= 1
++#CPU := NONE
++#ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
++#  CPU := X86
++#  ifeq ("$(BITS)", "32")
++#    ARCH_DETECTED := 64BITS_32
++#  else
++#    ARCH_DETECTED := 64BITS
++#  endif
++#endif
++#ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
++#  CPU := X86
++#  ARCH_DETECTED := 32BITS
++#endif
+ # PPC doesn't work yet
+ #ifneq ("$(filter ppc powerpc,$(HOST_CPU))","")
+ #  CPU := PPC
+diff -rupN mupen64plus-1.99.4_orig/source/mupen64plus-ui-console/projects/unix/Makefile mupen64plus-1.99.4/source/mupen64plus-ui-console/projects/unix/Makefile
+--- mupen64plus-1.99.4_orig/source/mupen64plus-ui-console/projects/unix/Makefile	2012-02-27 18:45:54.000000000 +0100
++++ mupen64plus-1.99.4/source/mupen64plus-ui-console/projects/unix/Makefile	2012-02-27 19:01:00.000000000 +0100
+@@ -21,46 +21,62 @@
+ # Makefile for Mupen64plus-ui-console
+ 
+ # detect operation system
+-UNAME = $(shell uname -s)
+-OS := NONE
+-ifeq ("$(UNAME)","Linux")
+-  OS = LINUX
+-endif
+-ifeq ("$(UNAME)","linux")
+-  OS = LINUX
+-endif
+-ifneq ("$(filter GNU hurd,$(UNAME))","")
+-  OS = LINUX
+-endif
+-ifeq ("$(UNAME)","Darwin")
+-  OS = OSX
+-endif
+-ifeq ("$(UNAME)","FreeBSD")
+-  OS = FREEBSD
+-endif
+-ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
+-  OS = LINUX
+-endif
+-ifeq ("$(OS)","NONE")
+-  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
+-endif
++OS := LINUX
++SHARED = -shared
++SO_EXTENSION = so
++
++#UNAME = $(shell uname -s)
++#OS := NONE
++#ifeq ("$(UNAME)","Linux")
++#  OS = LINUX
++#endif
++#ifeq ("$(UNAME)","linux")
++#  OS = LINUX
++#endif
++#ifneq ("$(filter GNU hurd,$(UNAME))","")
++#  OS = LINUX
++#endif
++#ifeq ("$(UNAME)","Darwin")
++#  OS = OSX
++#endif
++#ifeq ("$(UNAME)","FreeBSD")
++#  OS = FREEBSD
++#endif
++#ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
++#  OS = LINUX
++#endif
++#ifeq ("$(OS)","NONE")
++#  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
++#endif
+ 
+ # detect system architecture
+-HOST_CPU ?= $(shell uname -m)
+-NO_ASM ?= 1
+ CPU := NONE
+-ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
+-  CPU := X86
+-  ifeq ("$(BITS)", "32")
+-    ARCH_DETECTED := 64BITS_32
+-  else
+-    ARCH_DETECTED := 64BITS
+-  endif
++ifeq ("$(ARCH)","i386")
++        CPU := X86
++        ARCH_DETECTED := 32BITS
+ endif
+-ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
+-  CPU := X86
+-  ARCH_DETECTED := 32BITS
++
++ifeq ("$(ARCH)","x86_64")
++        CPU := X86
++        ARCH_DETECTED := 64BITS
+ endif
++NO_ASM ?= 1
++
++#HOST_CPU ?= $(shell uname -m)
++#NO_ASM ?= 1
++#CPU := NONE
++#ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
++#  CPU := X86
++#  ifeq ("$(BITS)", "32")
++#    ARCH_DETECTED := 64BITS_32
++#  else
++#    ARCH_DETECTED := 64BITS
++#  endif
++#endif
++#ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
++#  CPU := X86
++#  ARCH_DETECTED := 32BITS
++#endif
+ # PPC doesn't work yet
+ #ifneq ("$(filter ppc powerpc,$(HOST_CPU))","")
+ #  CPU := PPC
+diff -rupN mupen64plus-1.99.4_orig/source/mupen64plus-video-rice/projects/unix/Makefile mupen64plus-1.99.4/source/mupen64plus-video-rice/projects/unix/Makefile
+--- mupen64plus-1.99.4_orig/source/mupen64plus-video-rice/projects/unix/Makefile	2012-02-27 18:45:54.000000000 +0100
++++ mupen64plus-1.99.4/source/mupen64plus-video-rice/projects/unix/Makefile	2012-02-27 19:01:41.000000000 +0100
+@@ -22,57 +22,73 @@
+ # Makefile for RiceVideo plugin in Mupen64Plus
+ 
+ # detect operating system
+-UNAME = $(shell uname -s)
+-OS := NONE
+-ifeq ("$(UNAME)","Linux")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(UNAME)","linux")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifneq ("$(filter GNU hurd,$(UNAME))","")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(UNAME)","Darwin")
+-  OS = OSX
+-  SO_EXTENSION = dylib
+-  SHARED = -bundle
+-endif
+-ifeq ("$(UNAME)","FreeBSD")
+-  OS = FREEBSD
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
+-  OS = LINUX
+-  SO_EXTENSION = so
+-  SHARED = -shared
+-endif
+-ifeq ("$(OS)","NONE")
+-  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
+-endif
++OS := LINUX
++SHARED = -shared
++SO_EXTENSION = so
++
++#UNAME = $(shell uname -s)
++#OS := NONE
++#ifeq ("$(UNAME)","Linux")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(UNAME)","linux")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifneq ("$(filter GNU hurd,$(UNAME))","")
++# OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(UNAME)","Darwin")
++#  OS = OSX
++#  SO_EXTENSION = dylib
++#  SHARED = -bundle
++#endif
++#ifeq ("$(UNAME)","FreeBSD")
++#  OS = FREEBSD
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifneq ("$(filter GNU/kFreeBSD kfreebsd,$(UNAME))","")
++#  OS = LINUX
++#  SO_EXTENSION = so
++#  SHARED = -shared
++#endif
++#ifeq ("$(OS)","NONE")
++#  $(error OS type "$(UNAME)" not supported.  Please file bug report at 'http://code.google.com/p/mupen64plus/issues')
++#endif
+ 
+ # detect system architecture
+-HOST_CPU ?= $(shell uname -m)
+ CPU := NONE
+-ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
+-  CPU := X86
+-  ifeq ("$(BITS)", "32")
+-    ARCH_DETECTED := 64BITS_32
+-  else
+-    ARCH_DETECTED := 64BITS
+-  endif
+-endif
+-ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
+-  CPU := X86
+-  ARCH_DETECTED := 32BITS
+-endif
++ifeq ("$(ARCH)","i386")
++        CPU := X86
++        ARCH_DETECTED := 32BITS
++endif
++
++ifeq ("$(ARCH)","x86_64")
++        CPU := X86
++        ARCH_DETECTED := 64BITS
++endif
++NO_ASM ?= 1
++
++#HOST_CPU ?= $(shell uname -m)
++#CPU := NONE
++#ifneq ("$(filter x86_64 amd64,$(HOST_CPU))","")
++#  CPU := X86
++#  ifeq ("$(BITS)", "32")
++#    ARCH_DETECTED := 64BITS_32
++#  else
++#    ARCH_DETECTED := 64BITS
++#  endif
++#endif
++#ifneq ("$(filter pentium i%86,$(HOST_CPU))","")
++#  CPU := X86
++#  ARCH_DETECTED := 32BITS
++#endif
+ # PPC doesn't work yet
+ #ifneq ("$(filter ppc powerpc,$(HOST_CPU))","")
+ #  CPU := PPC
