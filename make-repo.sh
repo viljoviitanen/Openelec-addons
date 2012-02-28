@@ -19,19 +19,25 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-
-#list of addons that are going to be built. Names cannot contain spaces or other special characters!
-ADDONS="fceu mysql-server mc mksquashfs bluez-tools"
-
-#list of projects and archs that addons are built for in project arch pairs
-TARGETS="Generic i386 Intel x86_64"
-
-CONF="$HOME/.openelec-addons"
-
 die() {
   echo "$0: fatal error: $1"
   exit 1
 }
+
+# command line parameters are the addons to build this time
+# default read from addons/$ARCH
+PARAMS="$@"
+
+# ARCH and PROJECT environment variables specify the archs and projects to build
+if [ "x$ARCH" = "x" ]; then
+  #default projects and archs that addons are built for if not specified via env
+  TARGETS="Generic i386 Intel x86_64"
+else
+  [ "x$PROJECT" = "x" ] || die "specify both ARCH and PROJECT"
+  TARGETS="$PROJECT $ARCH"
+fi
+
+CONF="$HOME/.openelec-addons"
 
 MYDIR=`pwd`"/"`dirname "$0"`
 
@@ -70,6 +76,14 @@ doit() {
   PROJECT=$1
   ARCH=$2
   
+  #if no command line parameters were given, build all
+  if [ "x$PARAMS" = "x" ]; then
+    ADDONS=`cd $MYDIR/addons/$ARCH && ls`
+  else
+    ADDONS=$PARAMS
+  fi
+  [ "x$ADDONS" = "x" ] && die "No addons to build?"
+
   for addon in $ADDONS; do
     echo "Project: $PROJECT Arch: $ARCH create_addon $addon"
     export PROJECT
