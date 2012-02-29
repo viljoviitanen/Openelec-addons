@@ -1,0 +1,11 @@
+snes9x_cv_linux_os=${snes9x_cv_linux_os=yes}
+snes9x_cv_option_W=${snes9x_cv_option_W=yes}
+snes9x_cv_option_Wall=${snes9x_cv_option_Wall=yes}
+snes9x_cv_option_Wno_unused_parameter=${snes9x_cv_option_Wno_unused_parameter=yes}
+snes9x_cv_option_g=${snes9x_cv_option_g=truetrue}
+snes9x_cv_option_no_exceptions=${snes9x_cv_option_no_exceptions=yes}
+snes9x_cv_option_no_rtti=${snes9x_cv_option_no_rtti=yes}
+snes9x_cv_option_o0=${snes9x_cv_option_o0=true}
+snes9x_cv_option_o3=${snes9x_cv_option_o3=yes}
+snes9x_cv_option_omit_frame_pointer=${snes9x_cv_option_omit_frame_pointer=yes}
+snes9x_cv_option_pedantic=${snes9x_cv_option_pedantic=yes}

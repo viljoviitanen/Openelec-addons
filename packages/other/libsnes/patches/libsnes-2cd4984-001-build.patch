@@ -1,0 +1,59 @@
+diff -rupN Themaister-snes9x-libsnes-2cd4984/unix/configure Themaister-snes9x-libsnes-2cd4984_changed/unix/configure
+--- Themaister-snes9x-libsnes-2cd4984/unix/configure	2011-12-12 14:07:36.000000000 +0100
++++ Themaister-snes9x-libsnes-2cd4984_changed/unix/configure	2011-12-12 14:09:20.000000000 +0100
+@@ -4743,12 +4743,7 @@ $as_echo_n "checking whether right shift
+ 	OLD_CXXFLAGS="$CXXFLAGS"
+ 	CXXFLAGS="$OLD_CXXFLAGS $snes9x_have_stdint_h"
+ 
+-	if test "$cross_compiling" = yes; then :
+-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "cannot run test program while cross compiling
+-See \`config.log' for more details" "$LINENO" 5; }
+-else
++	if test "$cross_compiling" = no; then :
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -4807,12 +4802,7 @@ $as_echo_n "checking whether right shift
+ 	OLD_CXXFLAGS="$CXXFLAGS"
+ 	CXXFLAGS="$OLD_CXXFLAGS $snes9x_have_stdint_h"
+ 
+-	if test "$cross_compiling" = yes; then :
+-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "cannot run test program while cross compiling
+-See \`config.log' for more details" "$LINENO" 5; }
+-else
++	if test "$cross_compiling" = no; then :
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -4871,12 +4861,7 @@ $as_echo_n "checking whether right shift
+ 	OLD_CXXFLAGS="$CXXFLAGS"
+ 	CXXFLAGS="$OLD_CXXFLAGS $snes9x_have_stdint_h"
+ 
+-	if test "$cross_compiling" = yes; then :
+-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "cannot run test program while cross compiling
+-See \`config.log' for more details" "$LINENO" 5; }
+-else
++	if test "$cross_compiling" = no; then :
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -4935,12 +4920,7 @@ $as_echo_n "checking whether right shift
+ 	OLD_CXXFLAGS="$CXXFLAGS"
+ 	CXXFLAGS="$OLD_CXXFLAGS $snes9x_have_stdint_h"
+ 
+-	if test "$cross_compiling" = yes; then :
+-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "cannot run test program while cross compiling
+-See \`config.log' for more details" "$LINENO" 5; }
+-else
++	if test "$cross_compiling" = no; then :
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
