@@ -1,0 +1,37 @@
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+################################################################################
+
+PKG_NAME="ssnes"
+PKG_VERSION="e488c30"
+PKG_REV="3"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
+PKG_SITE="http://themaister.net/ssnes.html"
+PKG_URL="https://nodeload.github.com/Themaister/SSNES/zipball/$PKG_VERSION"
+PKG_DEPENDS="glib libsnes"
+PKG_BUILD_DEPENDS="toolchain glib libsnes SDL"
+PKG_PRIORITY="optional"
+PKG_SECTION="emulators"
+PKG_SHORTDESC="SSNES is a simple frontend for the libsnes library."
+PKG_LONGDESC="SSNES is a multi-system emulator for Linux, Windows, Mac OS X and *BSD with roots as a SNES emulator.Its design and background is quite different than most other emulators as SSNES does not implement a SNES emulation core itself. SSNES talks to libsnes, a generic SNES core API made by byuu, author of bSNES. This means that SSNES is core agnostic, and it does not care if you use bSNES, SNES9x or any implementation of libsnes at all. It can even work with completely different systems if you're adventurous enough. libsnes has been extended to work well with other similar systems."
+PKG_IS_ADDON="yes"
+PKG_ADDON_TYPE="xbmc.python.script"
+
+PKG_AUTORECONF="no"

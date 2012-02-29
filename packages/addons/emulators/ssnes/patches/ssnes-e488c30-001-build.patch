@@ -1,0 +1,12 @@
+diff -rupN Themaister-SSNES-e488c30/Makefile Themaister-SSNES-e488c30_changed/Makefile
+--- Themaister-SSNES-e488c30/Makefile	2011-12-12 14:34:30.000000000 +0100
++++ Themaister-SSNES-e488c30_changed/Makefile	2011-12-12 14:35:04.000000000 +0100
+@@ -6,7 +6,7 @@ OBJ = ssnes.o file.o driver.o settings.o
+ JOYCONFIG_OBJ = tools/ssnes-joyconfig.o conf/config_file.o strl.o
+ HEADERS = $(wildcard */*.h) $(wildcard *.h)
+ 
+-LIBS = -lm
++LIBS = -lm -lX11
+ DEFINES = -DHAVE_CONFIG_H
+ 
+ ifneq ($(findstring Darwin,$(OS)),)
