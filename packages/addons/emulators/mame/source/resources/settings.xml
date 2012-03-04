@@ -1,0 +1,3 @@
+<settings>
+	<setting id="param" type="text" label="30000" default="-autoframeskip"/>
+</settings>

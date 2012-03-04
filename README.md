@@ -38,6 +38,14 @@ Adds also scons build system, below
 
 http://scons.org - used in fceux build.
 
+### MAME
+
+Doesn't build automatically. Compile MAME first manually from source with native
+on host (32- or 64-bit), first applying the patch included which removes
+gnome and xinerama references. After that build mame addon for the architecture
+you built native mame for. To build 32-bit mame on 64-bit host, you need
+to create e.g. a 32-bit chroot environment.
+
 ## Other addons
 
 each directory has a README file that lists the maintainer of that addon.

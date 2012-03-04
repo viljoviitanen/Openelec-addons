@@ -1,0 +1,92 @@
+--- a/src/osd/sdl/dview.c	2011-03-29 10:50:06.000000000 +0300
++++ b/src/osd/sdl/dview.c	2012-02-29 22:05:47.653503477 +0200
+@@ -339,13 +339,9 @@
+ static void dview_class_init(DViewClass *dvc)
+ {
+ #ifndef SDLMAME_WIN32
+-    GConfClient *conf = gconf_client_get_default();
+     char *name = 0;
+     dvc->fixedfont = 0;
+ 
+-	if(conf)
+-		name = gconf_client_get_string(conf, "/desktop/gnome/interface/monospace_font_name", 0);
+-
+     if(name) {
+         dvc->fixedfont = pango_font_description_from_string(name);
+         g_free(name);
+--- a/src/osd/sdl/video.c	2011-12-15 09:10:48.000000000 +0200
++++ b/src/osd/sdl/video.c	2012-02-29 23:16:29.405327986 +0200
+@@ -15,9 +15,6 @@
+ #include <SDL/SDL_syswm.h>
+ #endif
+ 
+-#ifdef SDLMAME_X11
+-#include <X11/extensions/Xinerama.h>
+-#endif
+ 
+ #ifdef SDLMAME_MACOSX
+ #undef Status
+@@ -207,23 +204,8 @@
+ 			monitor->monitor_width = DisplayWidth(info.info.x11.display, screen);
+ 			monitor->monitor_height = DisplayHeight(info.info.x11.display, screen);
+ 
+-			if ((XineramaIsActive(info.info.x11.display)) && video_config.restrictonemonitor)
+-			{
+-				XineramaScreenInfo *xineinfo;
+-				int numscreens;
+-
+-    				xineinfo = XineramaQueryScreens(info.info.x11.display, &numscreens);
+-
+-				monitor->center_width = xineinfo[0].width;
+-				monitor->center_height = xineinfo[0].height;
+-
+-				XFree(xineinfo);
+-			}
+-			else
+-			{
+ 				monitor->center_width = monitor->monitor_width;
+ 				monitor->center_height = monitor->monitor_height;
+-			}
+ 		}
+ 		else
+ 		#endif // defined(SDLMAME_X11)
+--- a/src/osd/sdl/sdl.mak	2010-09-18 22:09:02.000000000 +0000
++++ b/src/osd/sdl/sdl.mak	2012-03-04 19:25:55.303237904 +0000
+@@ -306,9 +306,7 @@
+ DEFS += -DSDLMAME_UNIX
+ DEBUGOBJS = $(SDLOBJ)/debugwin.o $(SDLOBJ)/dview.o $(SDLOBJ)/debug-sup.o $(SDLOBJ)/debug-intf.o
+ LIBGL = -lGL
+-ifeq ($(NO_X11),1)
+ NO_DEBUGGER = 1
+-endif
+ 
+ ifneq (,$(findstring ppc,$(UNAME)))
+ # override for preprocessor weirdness on PPC Linux
+@@ -452,13 +450,10 @@
+ else
+ # Default libs
+ DEFS += -DSDLMAME_X11
+-LIBS += -lX11 -lXinerama
++LIBS += -lX11
+ 
+ # the new debugger relies on GTK+ in addition to the base SDLMAME needs
+ # Non-X11 builds can not use the debugger
+-INCPATH += `pkg-config --cflags-only-I gtk+-2.0` `pkg-config --cflags-only-I gconf-2.0`
+-CCOMFLAGS += `pkg-config --cflags-only-other gtk+-2.0` `pkg-config --cflags-only-other gconf-2.0`
+-LIBS += `pkg-config --libs gtk+-2.0` `pkg-config --libs gconf-2.0`
+ #CCOMFLAGS += -DGTK_DISABLE_DEPRECATED
+ 
+ # some systems still put important things in a different prefix
+--- a/makefile	2012-03-04 19:09:44.091278081 +0000
++++ b/makefile	2012-03-04 19:09:58.135277502 +0000
+@@ -295,8 +295,8 @@
+ 
+ # compiler, linker and utilities
+ AR = @ar
+-CC = @gcc
+-LD = @g++
++CC = @ccache gcc
++LD = @ccache g++
+ MD = -mkdir$(EXE)
+ RM = @rm -f
+ OBJDUMP = @objdump
