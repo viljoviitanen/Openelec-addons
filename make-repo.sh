@@ -33,7 +33,7 @@ if [ "x$ARCH" = "x" ]; then
   #default projects and archs that addons are built for if not specified via env
   TARGETS="Generic i386 Intel x86_64"
 else
-  [ "x$PROJECT" = "x" ] || die "specify both ARCH and PROJECT"
+  [ "x$PROJECT" = "x" ] && die "specify both ARCH and PROJECT"
   TARGETS="$PROJECT $ARCH"
 fi
 
