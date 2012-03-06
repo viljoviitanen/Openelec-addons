@@ -1,0 +1,7 @@
+Addon maintainer: Viljo Viitanen <viljo.viitanen@iki.fi> - openelec forum username viljoviitanen
+
+Default username and password is "openelec", change in addon settings.
+
+During startup insecure system samba is started and after a few seconds
+it is killed and the password protected version is started.
+If this bothers you, add an user samba config and e.g. remove all shares.
