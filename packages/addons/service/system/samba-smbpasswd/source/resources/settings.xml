@@ -1,0 +1,4 @@
+<settings>
+    <setting id="USERNAME" type="text" label="5013" default="openelec" />
+    <setting id="PASSWORD" type="text" option="hidden" label="5014" default="openelec" />
+</settings>

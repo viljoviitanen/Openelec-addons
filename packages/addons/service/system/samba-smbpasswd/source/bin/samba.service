@@ -1,0 +1,60 @@
+#!/bin/sh
+
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2012 Viljo Viitanen (viljo.viitanen@iki.fi) 
+#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+################################################################################
+
+ADDON_NAME="service.system.samba"
+ADDON_DIR="$HOME/.xbmc/addons/$ADDON_NAME"
+ADDON_HOME="$HOME/.xbmc/userdata/addon_data/$ADDON_NAME"
+
+  mkdir -p "$ADDON_HOME"
+
+  export PATH=$ADDON_DIR/bin:$PATH
+
+  if [ -f /var/config/settings.conf ]; then
+    . /var/config/settings.conf
+
+    if [ "$SAMBA_START" = "true" ]; then
+
+      SAMBA_USERNAME="$1"
+      SAMBA_PASSWORD="$2"
+      
+      echo -e "$SAMBA_PASSWORD\n$SAMBA_PASSWORD" | LD_LIBRARY_PATH="$ADDON_DIR/bin" smbpasswd -s -a root >/dev/null 2>&1
+      #username map: first line makes sure plain root does not work all the time
+      #processing continues, so if user chooses root as username, second line overrides the first
+      #this is done always in case user uses passwords in userconf.
+      echo -e "nobody = root\nroot = $SAMBA_USERNAME" > /var/run/samba.map
+  
+      SMB_SECURECONF="$ADDON_HOME/smb.secure.conf"
+
+      if [ ! -f "$SMB_SECURECONF" ]; then
+        cp "$ADDON_DIR/smb.secure.conf" "$SMB_SECURECONF"
+      fi
+
+      SMB_ARG="--configfile=$SMB_SECURECONF"
+      
+
+      killall smbd nmbd
+      mkdir -p /var/log/samba
+      nmbd --daemon $SMB_ARG > /dev/null 2>&1
+      smbd --daemon $SMB_ARG > /dev/null 2>&1
+    fi
+  fi
