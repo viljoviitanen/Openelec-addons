@@ -1,0 +1,5 @@
+Addon maintainer: Viljo Viitanen <viljo.viitanen@iki.fi> - openelec forum username viljoviitanen
+
+If enabled, during startup insecure system ssh is started and after a few
+seconds it is killed and the version with only ssh key login is started.
+If this bothers you, don't enable the default ssh.
