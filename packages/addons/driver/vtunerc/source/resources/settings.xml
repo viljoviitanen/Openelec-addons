@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+   <!-- vtunerc -->
+    <category label="1000">
+    <setting type="sep" />
+    <setting id="TUNER_TYPE" type="labelenum" label="1010" values="S|S2|T|C" sort="no" default="S"/>
+    </category>
+</settings>
