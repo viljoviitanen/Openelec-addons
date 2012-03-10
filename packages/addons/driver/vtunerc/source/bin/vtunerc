@@ -1,0 +1,14 @@
+#!/bin/sh
+ADDON_HOME="$HOME/.xbmc/userdata/addon_data/driver.dvb.vtunerc"
+
+mkdir -p $ADDON_HOME
+cd $ADDON_HOME
+if [ ! -f vtunerc ]; then
+  URL="http://vtuner.googlecode.com/files/vtunerc.i686"
+  ARCH=`uname -m`
+  [ "$ARCH" = "x86_64" ] && URL="http://vtuner.googlecode.com/files/vtunerc.x86_64"
+  wget "$URL" -O vtunerc
+fi
+chmod a+rx vtunerc
+./vtunerc "$@"
+
