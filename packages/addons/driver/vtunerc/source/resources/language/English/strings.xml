@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<!-- vtunerc -->
+	<string id="1000">Vtuner client</string>
+	<string id="1010">tuner type</string>
+</strings>
