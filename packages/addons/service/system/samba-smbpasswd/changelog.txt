@@ -1,2 +1,4 @@
+2.0.1
+- if .config/samba.conf exists, use it (like openelec default samba)
 2.0.0
 - initial version

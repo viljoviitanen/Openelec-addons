@@ -21,7 +21,7 @@
 PKG_NAME="samba"
 #version needs to be same as in openelec default samba
 PKG_VERSION="3.5.11"
-PKG_REV="0"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.samba.org"
@@ -31,7 +31,7 @@ PKG_BUILD_DEPENDS="toolchain libiconv sqlite samba"
 PKG_PRIORITY="optional"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Add password support to openelec samba"
-PKG_LONGDESC="Samba is a SMB server that runs on Unix and other operating systems. It allows these operating systems (currently Unix, Netware, OS/2 and AmigaDOS) to act as a file and print server for SMB and CIFS clients. There are many Lan-Manager compatible clients such as LanManager for DOS, Windows for Workgroups, Windows NT, Windows 95, Linux smbfs, OS/2, Pathworks and more."
+PKG_LONGDESC="By default addon uses its own samba config file at .xbmc/userdata/addon_data/service.system.samba/smb.secure.conf which can be modified . However if .config/samba.conf exists, the addon uses it like openelec original samba server."
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
 
