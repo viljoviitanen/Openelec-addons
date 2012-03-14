@@ -1,0 +1,39 @@
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2012 Viljo Viitanen (viljo.viitanen@iki.fi) 
+#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+################################################################################
+
+PKG_NAME="openvpn"
+PKG_VERSION="2.2.2"
+PKG_REV="0"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://openvpn.net"
+PKG_URL="http://swupdate.openvpn.org/community/releases/openvpn-$PKG_VERSION.tar.gz"
+PKG_DEPENDS="lzo openssl"
+PKG_BUILD_DEPENDS="toolchain lzo openssl"
+PKG_PRIORITY="optional"
+PKG_SECTION="network/vpn"
+PKG_SHORTDESC="openvpn"
+PKG_LONGDESC="openvpn"
+
+PKG_IS_ADDON="yes"
+PKG_ADDON_TYPE="xbmc.python.script"
+
+PKG_AUTORECONF="yes"
