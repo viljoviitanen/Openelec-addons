@@ -22,8 +22,6 @@
 ################################################################################
 
 . config/options $1
- 
-ADDON_DIR="/storage/.xbmc/addons/network.vpn.openvpn"
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp $BUILD/openvpn-*/openvpn $ADDON_BUILD/$PKG_ADDON_ID/bin/

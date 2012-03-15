@@ -1,0 +1,5 @@
+<settings>
+	<setting id="filename" type="file" label="30000" default=""/>
+	<setting id="username" type="text" label="30001" default=""/>
+	<setting id="password" type="text" option="hidden" label="30002" default=""/>
+</settings>

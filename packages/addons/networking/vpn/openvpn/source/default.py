@@ -2,6 +2,7 @@
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2012 Viljo Viitanen (viljo.viitanen@iki.fi) 
 #      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2011-2011 Gregor Fuis (gujs@openelec.tv)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,21 +20,31 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="openvpn"
-PKG_VERSION="2.2.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://openvpn.net"
-PKG_URL="http://swupdate.openvpn.org/community/releases/openvpn-$PKG_VERSION.tar.gz"
-PKG_DEPENDS="lzo openssl"
-PKG_BUILD_DEPENDS="toolchain lzo openssl"
-PKG_PRIORITY="optional"
-PKG_SECTION="network/vpn"
-PKG_SHORTDESC="openvpn"
-PKG_LONGDESC="openvpn - Instructions: place all configuration files (the .ovpn file and certificates) e.g. in downloads share. From addon settings find the .opvn file and enter username and password."
+import os
+import sys
+import re
+import xbmcaddon
+import datetime
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.python.script"
+now = datetime.datetime.now()
 
-PKG_AUTORECONF="yes"
+__settings__   = xbmcaddon.Addon(id='network.vpn.openvpn')
+__cwd__        = __settings__.getAddonInfo('path')
+__path__       = xbmc.translatePath( os.path.join( __cwd__, 'bin', "openvpn") )
+
+filename   = __settings__.getSetting('filename')
+username   = __settings__.getSetting('username')
+password   = __settings__.getSetting('password')
+
+if filename == '':
+  __settings__.openSettings(url=sys.argv[0])
+  
+cdir = re.sub(r'[^/]+$','',filename)
+
+os.system( "chmod a+rx " + __path__ )
+os.system( "mkdir -p /storage/logfiles/" )
+os.system( "echo '%s' > /tmp/openvpn.credentials" % (username.replace("'", "'\\''")) )
+os.system( "echo '%s' >> /tmp/openvpn.credentials" % (password.replace("'", "'\\''")) )
+
+os.system( "%s --cd '%s' --config '%s' --auth-user-pass /tmp/openvpn.credentials >> /storage/logfiles/openvpn.%s.log" % (__path__,cdir.replace("'", "'\\''"), filename.replace("'", "'\\''"), now.strftime("%Y-%m-%d")) )
+

@@ -1,2 +1,4 @@
+2.0.1
+- add configuration + startup
 2.0.0
 - initial version. Only the openvpn binary.
