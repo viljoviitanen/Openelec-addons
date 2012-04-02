@@ -25,3 +25,4 @@
 mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -PR $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID/
   sed 's/port = 8084/port = 8085/' -i $ADDON_BUILD/$PKG_ADDON_ID/htpc/__init__.py
+  sed 's/8084/8085/' -i $ADDON_BUILD/$PKG_ADDON_ID/interfaces/default/settings.tpl
