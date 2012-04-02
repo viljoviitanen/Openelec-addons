@@ -30,7 +30,7 @@ PKG_BUILD_DEPENDS="toolchain Python"
 PKG_PRIORITY="optional"
 PKG_SECTION="service/web"
 PKG_SHORTDESC="HTPC-Manager: Manager XBMC, Sabnzbd, Sickbeard with one app"
-PKG_LONGDESC="HTPC-Manager is a management tool with features such as a dashboard with quick overview of what is recently added, add and remove nzb's to sabnzbd, view XBMC library, now playing info with remote controls, add TV Shows to sickbeard, view upcoming shows from sickbeard and search NZB's and add them to sabnzbd queue. Default port is 8084"
+PKG_LONGDESC="HTPC-Manager is a management tool with features such as a dashboard with quick overview of what is recently added, add and remove nzb's to sabnzbd, view XBMC library, now playing info with remote controls, add TV Shows to sickbeard, view upcoming shows from sickbeard and search NZB's and add them to sabnzbd queue. Default port is 8085"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
