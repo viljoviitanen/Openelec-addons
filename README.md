@@ -1,4 +1,10 @@
-# Openelec unofficial addon repository
+# Openelec unofficial addon repository - deprecated on 23.4.2012!
+
+The repository needs a new maintainer, I no longer have enough time to work on this...
+Also gcc 4.7 made many addons unbuildable. Probably all issues could be fixed by
+following this document http://gcc.gnu.org/gcc-4.7/porting_to.html
+
+# Old instructions
 
 How to use:
 
